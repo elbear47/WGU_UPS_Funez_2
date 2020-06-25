@@ -52,3 +52,21 @@ class Graph:
                                               # location of a and b as a key for the value of
                                               # the distance in miles
         return distance
+
+    # need a function to get address details from just address name
+    # we will extract address_name from packages csv to grab addresses details here
+    def get_address_details(self, address_name):
+        location_file = open('./files/addressIndex.csv', 'r')  # open csv
+        reader = csv.reader(location_file)  # reader will be our csv reader
+        map = Graph()
+
+        for row in reader:
+            if row[2] == address_name:
+                location = Vertex(int(row[0]), row[1], row[2])  # create a new location/vertex
+                #map.add_vertex(location)  # add that vertex to the map
+                return location
+    def get_address_name(self, Vertex):
+        return Vertex.location_name
+
+
+
