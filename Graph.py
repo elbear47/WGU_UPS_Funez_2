@@ -16,6 +16,7 @@ class Vertex:
     def __repr__(self):
         return f"index: {self.index}, location:{self.location_name}, address: {self.address}"
 
+
 # graph is going to be our map which we will add vertex's(locations) too
 class Graph:
     def __init__(self):
@@ -73,5 +74,9 @@ class Graph:
                 return location
 
     # a way to get the location name by using the Vertex objects stored in the adjacency list
-    def get_address_name(self, Vertex):
+    def get_location_name(self, Vertex):
         return Vertex.location_name
+
+    # way to return the address
+    def get_address(self, Vertex):
+        return Vertex.address
