@@ -1,9 +1,7 @@
 import csv
-from datetime import datetime
 
 package_file = open('./files/WGU_Package_Info.csv', 'r', encoding='utf-8-sig')  # open csv
 reader = csv.reader(package_file)  # reader will be our csv reader
-
 
 
 # HashTable class called Package
@@ -79,43 +77,3 @@ class Package:
             index += 1
         s += "   --------"
         return s
-
-
-# test main
-#c = Package()
-#c.load_csv_data(c)
-#package_list1 = [1, 13, 14, 15, 16, 20, 29, 30, 31, 34, 37,
-#                 40]
-#address_list = []
-#for package_id in package_list1:
-#    print(c.table[package_id][1])
-
-#    c.add_address_to_package_list(c.get_address(c,package_id),package_id)
-#print("'4580 S 2300 E' has the following Package ID's: ",c.package_id_to_address_list['4580 S 2300 E'])
-    #package.add_address_to_package_list(address)
-    # get package_ids by address
-    #print(package.package_id_to_address_list)
-#print(c.table[1][7])
-#c.update_status(c, 1, 'Getting delivered')
-#print(c.check_status(c, 1))
-# print(c.table)
-# this is for returning the status for packages
-# print(c.table[1][7])
-# c.table[1][7] = 'Getting Delivered'
-# print(c.table)
-# c.update_status(c,1,'SIKE')
-# .table[1][7] = 'Getting'
-# print(c.table)
-# for row in reader:
-#    c.insert(c.table, row)
-# print(package_id_list[0])
-# print(range(len(package_id_list)))
-# we can access information in the hash table by referencing the index
-# print(c.table[1])
-# print(c.table[1][7])
-# c.update_status(1, 0, 'getting delivered')
-# print(c.table[1][7])
-# c.update_status(1,0,"YAY")
-# print(c.table[1][7])
-# print(c.search(c.table, 1))
-# print(id)

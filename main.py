@@ -1,8 +1,7 @@
 from Package import Package
 from Address import Address, map
-from Item import check_time_first_truck, check_time_first_truck2, check_time_first_truck3
+from Times import check_time_first_truck, check_time_second_truck
 from datetime import datetime
-from Graph import Graph, Vertex
 
 package = Package()
 package.load_csv_data(package)
@@ -30,7 +29,7 @@ for package_id in package_list2:
 # load packages for truck three
 for package_id in package_list3:
     truck3.append(package_id)
-
+# take user input for the three choices
 user_input = int(input("Press 1 to Print Truck Route Details \n"
                        "Press 2 to view delivered packages by time range/package id \n"
                        "Press 3 to view ALL Package status by time range \n"
@@ -40,7 +39,6 @@ if user_input == 1:
     print("-----------TRUCK ONE DETAILS-------------------\n")
     print("Truck one contains these package id's: ", truck1)  # print all package id's in truck one
     print("--------------------------------------------")
-    print("truck one needs to go to these addresses:")
     address_list_truck1 = []  # initialize an empty address list
     # add the HUB since we always begin at the HUB ( this will be the start)
     address_list_truck1.append('4001 South 700 East')
@@ -75,9 +73,12 @@ if user_input == 1:
     # get distances between all the addresses
     # nearest neighbor algorithm
     # Space-time complexity is O(N)
-    while len(map.adjacency_list) > 1:  # only run until there is one element left in the list
-        # so we always have a TO:location
+    #
+    #
+    #
+    #
 
+    while len(map.adjacency_list) > 1:  # only run until there is one element left in the list
         # loop through Vertex Objects (locations) in the adjacency list
         for location1 in list(map.adjacency_list):
             # set the min distance to a high number because it will check if the min distance is greater than the
@@ -108,11 +109,9 @@ if user_input == 1:
                       package.package_id_to_address_list[map.get_address(min_address_name)])
                 # add miles
                 total_Miles = total_Miles + min_distance
-
     print("********************************************")
     print("-----------DONE WITH TRUCK ONE--------------")
     print("--------------------------------------------\n\n")
-
     # Clear List data
     map.adjacency_list.clear()
     # clear package to address list for packages that already delivered
@@ -121,7 +120,6 @@ if user_input == 1:
     print("-----------TRUCK TWO DETAILS-------------------\n")
     print("Truck two contains these package id's: ", truck2)
     print("--------------------------------------------")
-    print("truck two needs to go to these addresses:")
     address_list_truck2 = []  # initialize an empty address list
     # add the HUB since we always begin at the HUB ( this will be the start)
     address_list_truck2.append('4001 South 700 East')
@@ -189,7 +187,7 @@ if user_input == 1:
                 if bool(min_address_name):  # check if TO location is empty
 
                     print('from:', location1, ' To:', min_address_name, ' Distance: ', min_distance, "Delivered Time: ",
-                          check_time_first_truck2(min_distance), 'Package Ids Delivered:',
+                          check_time_second_truck(min_distance), 'Package Ids Delivered:',
                           package.package_id_to_address_list[map.get_address(min_address_name)])
                     # add miles
                     total_Miles = total_Miles + min_distance
@@ -206,7 +204,6 @@ if user_input == 1:
     print("-----------Driver Returns to Hub to deliver the rest of these-------------------\n")
     print("Truck One Starts second Trip and now contains these package id's: ", truck2)
     print("--------------------------------------------------------------------------------")
-    print("Now it needs to go to these addresses:")
     address_list_truck3 = []  # initialize an empty address list
     # add the HUB since we always begin at the HUB ( this will be the start)
     address_list_truck3.append('4001 South 700 East')
@@ -244,7 +241,6 @@ if user_input == 1:
     while len(map.adjacency_list) > 1:  # only run until there is one element left in the list
         # so we always have a TO:location
         # loop through Vertex Objects (locations) in the adjacency list
-
         for location1 in list(map.adjacency_list):
             # set the min distance to a high number because it will check if the min distance is greater than the
             # distance between both locations. It runs a for loop and sets the min distance to the
@@ -271,6 +267,7 @@ if user_input == 1:
                 del map.adjacency_list[location1]
                 if bool(min_address_name):  # check if TO location is empty
                     #  print truck route
+                    #  use the check_time_first_truck method because its going to be on truck one again
                     print('from:', location1, ' To:', min_address_name, ' Distance: ', min_distance, "Delivered Time: ",
                           check_time_first_truck(min_distance), 'Package Ids Delivered:',
                           package.package_id_to_address_list[map.get_address(min_address_name)])
@@ -279,8 +276,9 @@ if user_input == 1:
     print("----------------------------------------------------------")
     print("-----------DONE WITH TRUCK ONE (Second Trip)--------------")
     print("----------------------------------------------------------\n\n")
+    # print total miles
     print("Route Completed in :", total_Miles, " Total miles")
-    # Clear List so we can load truck two data
+    # Clear List
     map.adjacency_list.clear()
     # clear package to address list for packages that already delivered
     package.package_id_to_address_list.clear()
@@ -305,7 +303,6 @@ elif user_input == 2:
         print('Delivery Details for Package ID:', user_package_id, ' between ', st_time_str, ' and ', end_time_str)
         print("-------------------------------------------------------------")
         # --------------------TRUCK ONE ----------------------------#
-
         address_list_truck1 = []  # initialize an empty address list
         # add the HUB since we always begin at the HUB ( this will be the start)
         address_list_truck1.append('4001 South 700 East')
@@ -384,7 +381,6 @@ elif user_input == 2:
                     entryname = datetime.strptime(str(check_time_first_truck(min_distance)), '%H:%M:%S').time()
                     # add the list to the dictionary
                     dict[entryname] = case
-        # print packages delivered within the start and end times defined by the user
         # update the package status
         for d in dict:
             for pack_id in dict[d]['Package Ids:']:
@@ -401,7 +397,6 @@ elif user_input == 2:
         dict.clear()
         # Clear List so we can load truck two data
         map.adjacency_list.clear()
-        # print("**********************************************************************")
         # --------------------TRUCK TWO ----------------------------#
         address_list_truck2 = []  # initialize an empty address list
         # add the HUB since we always begin at the HUB ( this will be the start)
@@ -488,14 +483,12 @@ elif user_input == 2:
                             pass
                         else:
                             # our delivery timestamp will be the key to the dict
-                            entryname1 = datetime.strptime(str(check_time_first_truck2(min_distance)),
+                            entryname1 = datetime.strptime(str(check_time_second_truck(min_distance)),
                                                            '%H:%M:%S').time()
                             # add the list to the dictionary
                             dict[entryname1] = case
 
-        # print packages delivered within the start and end times defined by the user
         # update the package status
-
         for d in dict:
             for pack_id in dict[d]['Package Ids:']:
                 if datetime.strptime('08:00:00',
@@ -600,9 +593,7 @@ elif user_input == 2:
                             # add the list to the dictionary
                             dict[entryname1] = case
 
-        # print packages delivered within the start and end times defined by the user
         # update the package status
-
         for d in dict:
             for pack_id in dict[d]['Package Ids:']:
                 if datetime.strptime('08:00:00',
@@ -633,7 +624,6 @@ elif user_input == 2:
         print('Delivery Details between', st_time_str, ' and ', end_time_str)
         print("**********************************************************************")
         # --------------------TRUCK ONE ----------------------------#
-
         address_list_truck1 = []  # initialize an empty address list
         # add the HUB since we always begin at the HUB ( this will be the start)
         address_list_truck1.append('4001 South 700 East')
@@ -712,7 +702,6 @@ elif user_input == 2:
                     entryname = datetime.strptime(str(check_time_first_truck(min_distance)), '%H:%M:%S').time()
                     # add the list to the dictionary
                     dict[entryname] = case
-        # print packages delivered within the start and end times defined by the user
         # update the package status
         for d in dict:
             for pack_id in dict[d]['Package Ids:']:
@@ -820,14 +809,12 @@ elif user_input == 2:
                             pass
                         else:
                             # our delivery timestamp will be the key to the dict
-                            entryname1 = datetime.strptime(str(check_time_first_truck2(min_distance)),
+                            entryname1 = datetime.strptime(str(check_time_second_truck(min_distance)),
                                                            '%H:%M:%S').time()
                             # add the list to the dictionary
                             dict[entryname1] = case
 
-        # print packages delivered within the start and end times defined by the user
         # update the package status
-
         for d in dict:
             for pack_id in dict[d]['Package Ids:']:
                 if datetime.strptime('08:00:00',
@@ -1033,7 +1020,6 @@ elif user_input == 3:
                 entryname = datetime.strptime(str(check_time_first_truck(min_distance)), '%H:%M:%S').time()
                 # add the list to the dictionary
                 dict[entryname] = case
-    # print packages delivered within the start and end times defined by the user
     # update the package status
     for d in dict:
         for pack_id in dict[d]['Package Ids:']:
@@ -1141,13 +1127,11 @@ elif user_input == 3:
                         pass
                     else:
                         # our delivery timestamp will be the key to the dict
-                        entryname1 = datetime.strptime(str(check_time_first_truck2(min_distance)), '%H:%M:%S').time()
+                        entryname1 = datetime.strptime(str(check_time_second_truck(min_distance)), '%H:%M:%S').time()
                         # add the list to the dictionary
                         dict[entryname1] = case
 
-    # print packages delivered within the start and end times defined by the user
     # update the package status
-
     for d in dict:
         for pack_id in dict[d]['Package Ids:']:
             if datetime.strptime('08:00:00',
