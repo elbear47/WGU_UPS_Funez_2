@@ -197,7 +197,7 @@ elif user_input == 2:
         # update the package status
         for d in dict:
             for pack_id in dict[d]['Package Ids:']:
-                if st_time_DT <= d <= end_time_DT:  # if the delivered time is in between the start/end parameter then it was delivered
+                if datetime.strptime('08:00:00', '%H:%M:%S').time() <= d <= end_time_DT:  # if the delivered time is in between the start/end parameter then it was delivered
                     package.update_status(package, int(pack_id), 'Delivered')
                 elif d > end_time_DT:  # if delivered time is greater than the end parameter, then its still in route
                     package.update_status(package, int(pack_id), 'In route')
